@@ -16,6 +16,11 @@ class Servo:
         pulses_on = int(( self.T_counts * ( self.T_max_us - self.T_min_us ) * ( servo_angle - self.Theta_abs_min) ) / ( (self.Theta_max - self.Theta_min) * self.T_us ))
         print('Pulses on: '+str(pulses_on))
         self.pwm_driver.set_pwm(self.channel,0,pulses_on)
+    
+    def set_raw_position(self,pulses):
+        '''Set servo position with raw values'''
+        print('Servo set pulses: {}'.format(pulses))
+        self.pwm_driver.set_pwm(self.channel,0,pulses)
 
     def __init__(self,dev_name = 'servo', channel = 0, op_freq = 50.0, T_max_us = 2500, T_min_us = 500, T_center_us = 1500, Theta_max = 90, Theta_min = -90, Theta_center = 0) -> None:
         print('Servo init')
