@@ -13,7 +13,7 @@ import numpy as np
 from utilities.json_utilities import *
 
 pulses_on_list = []
-angles_list = np.arange(-180.0,200.0,22.5)
+angles_list = np.arange(180.0,-200.0,-22.5)
 lookup_table_json = 'servo_lookup_table.json'
 servo_channel = 0
 
@@ -74,7 +74,7 @@ try:
 
 
                 print(colored('Lookup table updated','blue'))
-                print('angles: '+str(lookup_table['angles']))
+                print('servo_angles: '+str(lookup_table['angles']))
                 print('pulses on: '+str(lookup_table['pulses_on']))
                 break
             else:
