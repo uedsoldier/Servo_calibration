@@ -30,6 +30,7 @@ try:
         if(choice is not 'r'):
             # Acercamiento a setpoint teorico
             camera.set_position(angles_list[event])
+            pass
         else:
             # Conserva posicion actual
             pass
@@ -38,18 +39,18 @@ try:
         ok = False
         while(not ok):
             try:
-                pulses_on = int(input(colored('Type pulses_on for angle = {:.1f} : '.format(angles_list[event]),'blue')))
+                pulses_on = int(input(colored('Type desired pulses for angle = {:.1f} : '.format(angles_list[event]),'blue')))
                 ok = True
             except Exception as e:
                 print(colored(e,'red'))
                 ok = False
         print(colored('Wait for servo positioning...','yellow'),end='')
         camera.servo_driver.pwm_driver.set_pwm(servo_channel,0,pulses_on)
-        time.sleep(5)
+        time.sleep(6)
         print(colored('OK','green'))
-        time.sleep(2)
+        time.sleep(1)
 
-        choice = input('Type r to repeat pulses_on capture or Enter to continue ')
+        choice = input('Type r to repeat pulses capture or Enter to continue ')
         if(choice is not 'r'):
             event += 1
             pulses_on_list.append(pulses_on)   # Llenado de lista de pulsos en on
@@ -66,14 +67,14 @@ try:
             if(choice is 'y'):
                 # Actualizacion de JSON de tabla de consulta
                 lookup_table = json_to_dict(lookup_table_json) 
-                lookup_table['angles'] = list(angles_list)
-                lookup_table['pulses_on'] = pulses_on_list
+                lookup_table['angles_table'] = list(angles_list)
+                lookup_table['counts_table'] = pulses_on_list
                 dict_to_json(lookup_table,lookup_table_json)
 
 
                 print(colored('Lookup table updated','blue'))
-                print('servo_angles: '+str(lookup_table['angles']))
-                print('pulses on: '+str(lookup_table['pulses_on']))
+                print('servo_angles: '+str(lookup_table['angles_table']))
+                print('pulses on: '+str(lookup_table['counts_table']))
                 break
             else:
                 print(colored('Lookup table not updated','yellow'))
